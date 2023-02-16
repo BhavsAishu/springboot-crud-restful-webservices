@@ -16,6 +16,34 @@ pipeline {
            
            
            }
+
+           stage ("sonar quality check") {
+           
+                 agent {
+                    docker {
+                      
+                       image 'maven'
+                    
+                    }
+                 }
+              steps {
+                 
+                 script {
+                    
+                    withCredentials([string(credentialsId: 'jenkins-sonar', variable: 'jenkins-sonar')]) {
+
+                       sh 'mvn clean package sonar:sonar'
+   
+                    }
+                 
+                 }
+              
+              
+              
+              }
+           
+           
+           }
         
         
         }
